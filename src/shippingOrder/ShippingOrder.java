@@ -3,9 +3,7 @@ package shippingOrder;
 import order.base.ICustomer;
 import order.base.IPerson;
 import order.base.OrderStatus;
-import order.exceptions.ContainerException;
-import order.exceptions.OrderException;
-import order.exceptions.PositionException;
+import exceptions.*;
 import order.packing.IContainer;
 import shippingorder.IShippingOrder;
 
@@ -16,12 +14,12 @@ import shippingorder.IShippingOrder;
 public class ShippingOrder implements IShippingOrder{
 
     @Override
-    public boolean addContainer(IContainer ic) throws OrderException, ContainerException {
+    public boolean addContainer(IContainer ic) throws orderException, containerException {
 
     }
 
     @Override
-    public boolean removeContainer(IContainer ic) throws OrderException, ContainerException {
+    public boolean removeContainer(IContainer ic) throws orderException, containerException {
 
     }
 
@@ -56,7 +54,7 @@ public class ShippingOrder implements IShippingOrder{
     }
 
     @Override
-    public void setStatus(OrderStatus os) throws OrderException, ContainerException, PositionException {
+    public void setStatus(OrderStatus os) throws orderException, containerException, positionException {
 
     }
 
@@ -71,7 +69,7 @@ public class ShippingOrder implements IShippingOrder{
     }
 
     @Override
-    public void validate() throws ContainerException, PositionException {
+    public void validate() throws containerException, positionException {
 
     }
 

@@ -52,43 +52,73 @@ public class Container extends Box implements IContainer{
         }
         return false;
     }
-    /*
-    Validates the container structure considering:
-    DONE - if the volume if lesser or equal to the current volume
-    HERE -> if all items are inside the container
-    if non of the items inside the container are overlapping
-    Throws:
-    ContainerException - if the volume greater than the current volume
-    PositionException - if some item is outside (or is overflowing) the 
-    container or if some item is overlapping with other item
-    */
+    
+    /**
+     * retorna True se houver algo fora do contentor
+     * se não retorna False 
+     * @return 
+     */
+    public boolean isOutsideContainer(){
+        for(int i=0; i<this.NumItems; i++){
+            // se estiver fora do contentor
+            if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() 
+               || this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() > this.getDepth() 
+               || this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() > this.getHeight()){ 
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * True -> interceta
+     * False -> não interceta
+     * @return 
+     */
+    public boolean isOverlaping(){
+        for(int i=0; i<this.NumItems - 1; i++){
+            for (int j = i + 1; j < this.NumItems; j++) {
+                if(i != j){ // se forem caixas diferentes                  
+                    /*
+                    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
+                    a -> i
+                    b -> j
+                    return (a.minX <= b.maxX && a.maxX >= b.minX) &&
+                           (a.minY <= b.maxY && a.maxY >= b.minY) &&
+                           (a.minZ <= b.maxZ && a.maxZ >= b.minZ);
+                    */
+                    if( (this.item[i].getPosition().getX() <= this.item[j].getPosition().getX() + this.item[j].getItem().getLenght() && this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() >= this.item[j].getPosition().getX()) &&
+                        (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
+                        (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
+                      ){
+                        return true; // intercepta
+                    }
+                }
+            }
+        }
+        return false; // não intercepta
+    }
+    
 
     @Override
     public void validate() throws containerException, positionException{
         if(getRemainingVolume() >= 0){ //não tem nada fora
-            for(int i=0; i<this.NumItems; i++){
+            /*for(int i=0; i<this.NumItems; i++){
                 // se estiver fora do contentor
                 if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() 
                    || this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() > this.getDepth() 
                    || this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() > this.getHeight()){ 
                     throw new positionException();
                 }
+            }*/
+            if (isOutsideContainer()){
+                throw new positionException();
             }
             
             // comparação entre caixas para overlaping
-            for(int i=0; i<this.NumItems - 1; i++){
+            /*for(int i=0; i<this.NumItems - 1; i++){
                 for (int j = i + 1; j < this.NumItems; j++) {
                     if(i != j){ // se forem caixas diferentes                  
-                        /*
-                        https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
-                        a -> i
-                        b -> j
-                        return (a.minX <= b.maxX && a.maxX >= b.minX) &&
-                               (a.minY <= b.maxY && a.maxY >= b.minY) &&
-                               (a.minZ <= b.maxZ && a.maxZ >= b.minZ);
-                        True -> interceta
-                        False -> não interceta
-                        */
                         if( (this.item[i].getPosition().getX() <= this.item[j].getPosition().getX() + this.item[j].getItem().getLenght() && this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() >= this.item[j].getPosition().getX()) &&
                             (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
                             (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
@@ -97,6 +127,9 @@ public class Container extends Box implements IContainer{
                         }
                     }
                 }
+            }*/
+            if(isOverlaping()){
+                throw new positionException();
             }
             
         }else{
@@ -104,8 +137,18 @@ public class Container extends Box implements IContainer{
         }
     }
 
+    // usar validate() para ver se se pode fechar o contentor ???????????
     @Override
-    public void close() throws ContainerException, PositionException {
+    public void close() throws containerException, positionException {
+        if ( this.getOccupiedVolume() > this.getVolume() ){ // if volume is greater than current volume
+            throw new containerException();
+        }
+        if(isOutsideContainer()){
+            throw new positionException();
+        }
+        if(isOverlaping()){
+            throw new positionException();
+        }
         this.status = containerStatus.CLOSED;
     }
 
