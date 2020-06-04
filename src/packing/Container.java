@@ -1,6 +1,6 @@
 package packing;
 
-import order.exceptions.ContainerException;
+import exceptions.*;
 import order.exceptions.PositionException;
 import order.packing.Color;
 import order.packing.IContainer;
@@ -62,21 +62,16 @@ public class Container extends Box implements IContainer{
     PositionException - if some item is outside (or is overflowing) the 
     container or if some item is overlapping with other item
     */
-    
-<<<<<<< Updated upstream
-    
-    
-=======
->>>>>>> Stashed changes
+
     @Override
-    public void validate() throws ContainerException, PositionException {
+    public void validate() throws containerException, positionException{
         if(getRemainingVolume() >= 0){ //não tem nada fora
             for(int i=0; i<this.NumItems; i++){
                 // se estiver fora do contentor
                 if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() 
                    || this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() > this.getDepth() 
                    || this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() > this.getHeight()){ 
-                    throw new PositionException("item is outside ");
+                    throw new positionException();
                 }
             }
             
@@ -98,14 +93,14 @@ public class Container extends Box implements IContainer{
                             (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
                             (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
                           ){
-                            throw new PositionException("Items Overlap");
+                            throw new positionException();
                         }
                     }
                 }
             }
             
         }else{
-            throw new ContainerException();
+            throw new containerException();
         }
     }
 
