@@ -85,14 +85,18 @@ public class Container extends Box implements IContainer{
                         
                   
                         /*
-                        returns True se intercetar
-                        returns False se não intercetar
-                        a 
+                        a -> i
+                        b -> j
                         return (a.minX <= b.maxX && a.maxX >= b.minX) &&
                                (a.minY <= b.maxY && a.maxY >= b.minY) &&
                                (a.minZ <= b.maxZ && a.maxZ >= b.minZ);
+                        True -> interceta
+                        False -> não interceta
                         */
-                        if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() ){
+                        if( (this.item[i].getPosition().getX() <= this.item[j].getPosition().getX() + this.item[j].getItem().getLenght() && this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() >= this.item[j].getPosition().getX()) &&
+                            (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
+                            (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
+                          ){
 
                         }
                     }
