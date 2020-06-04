@@ -20,7 +20,7 @@ public class Container extends Box implements IContainer{
     private static int id = 0;
     private static final int MAX_ITEMS = 50;
     private String reference = "container";
-    private statusContainer status = statusContainer.OPEN;
+    private containerStatus status = containerStatus.OPEN;
 
     public Container(int Depth, int Height, int Lenght, int Volume) {
         super(Depth, Height, Lenght, Volume);
@@ -28,8 +28,7 @@ public class Container extends Box implements IContainer{
         this.reference += this.id;
         this.id++;
     }
-    
-    
+
     
     @Override
     public boolean addItem(IItem iitem, IPosition ip, Color color) throws ContainerException {
@@ -51,7 +50,7 @@ public class Container extends Box implements IContainer{
                 return true;
             }
         }
-            return false;
+        return false;
     }
     /*
     Validates the container structure considering:
@@ -64,8 +63,11 @@ public class Container extends Box implements IContainer{
     container or if some item is overlapping with other item
     */
     
+<<<<<<< Updated upstream
     
     
+=======
+>>>>>>> Stashed changes
     @Override
     public void validate() throws ContainerException, PositionException {
         if(getRemainingVolume() >= 0){ //não tem nada fora
@@ -110,7 +112,7 @@ public class Container extends Box implements IContainer{
 
     @Override
     public void close() throws ContainerException, PositionException {
-        this.status = statusContainer.CLOSED;
+        this.status = containerStatus.CLOSED;
     }
 
     @Override
@@ -154,10 +156,9 @@ public class Container extends Box implements IContainer{
 
     @Override
     public boolean isClosed() {
-        if(this.status == statusContainer.CLOSED){
+        if(this.status == containerStatus.CLOSED){
             return true;
         }
         return false;
     }
-    
 }
