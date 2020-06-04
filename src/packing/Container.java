@@ -63,12 +63,21 @@ public class Container extends Box implements IContainer{
     PositionException - if some item is outside (or is overflowing) the 
     container or if some item is overlapping with other item
     */
+    
+    public boolean isInsideContainer(){
+        
+    }
+    
     @Override
     public void validate() throws ContainerException, PositionException {
         if(getRemainingVolume() >= 0){ //não tem nada fora
-            
+            for(int i=0; i<this.NumItems; i++){
+                if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght()){
+                
+                }
+            }
         }else{
-            throw new ContainerException;
+            throw new ContainerException();
         }
     }
 
@@ -79,9 +88,9 @@ public class Container extends Box implements IContainer{
 
     @Override
     public IItem getItem(String string) {
-        for(int i=0; i<this.NumItems; ++i){
-            if(this.item[this.NumItems].getItem().getReference().equals(string)){
-                return this.item[this.NumItems].getItem();
+        for(int i=0; i<this.NumItems; i++){
+            if(this.item[i].getItem().getReference().equals(string)){
+                return this.item[i].getItem();
             }
         }
         return null;
