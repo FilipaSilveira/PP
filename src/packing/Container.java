@@ -81,10 +81,9 @@ public class Container extends Box implements IContainer{
             // comparação entre caixas para overlaping
             for(int i=0; i<this.NumItems - 1; i++){
                 for (int j = i + 1; j < this.NumItems; j++) {
-                    if(i != j){ // se forem caixas diferentes
-                        
-                  
+                    if(i != j){ // se forem caixas diferentes                  
                         /*
+                        https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
                         a -> i
                         b -> j
                         return (a.minX <= b.maxX && a.maxX >= b.minX) &&
@@ -97,7 +96,7 @@ public class Container extends Box implements IContainer{
                             (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
                             (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
                           ){
-
+                            throw new PositionException("Items Overlap");
                         }
                     }
                 }
