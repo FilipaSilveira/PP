@@ -55,8 +55,8 @@ public class Container extends Box implements IContainer{
     }
     /*
     Validates the container structure considering:
-    if the volume if lesser or equal to the current volume
-    if all items are inside the container
+    DONE - if the volume if lesser or equal to the current volume
+    HERE -> if all items are inside the container
     if non of the items inside the container are overlapping
     Throws:
     ContainerException - if the volume greater than the current volume
@@ -64,18 +64,41 @@ public class Container extends Box implements IContainer{
     container or if some item is overlapping with other item
     */
     
-    public boolean isInsideContainer(){
-        
-    }
+    
     
     @Override
     public void validate() throws ContainerException, PositionException {
         if(getRemainingVolume() >= 0){ //não tem nada fora
             for(int i=0; i<this.NumItems; i++){
-                if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght()){
-                
+                // se estiver fora do contentor
+                if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() 
+                   || this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() > this.getDepth() 
+                   || this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() > this.getHeight()){ 
+                    throw new PositionException("item is outside ");
                 }
             }
+            
+            // comparação entre caixas para overlaping
+            for(int i=0; i<this.NumItems - 1; i++){
+                for (int j = i + 1; j < this.NumItems; j++) {
+                    if(i != j){ // se forem caixas diferentes
+                        
+                  
+                        /*
+                        returns True se intercetar
+                        returns False se não intercetar
+                        a 
+                        return (a.minX <= b.maxX && a.maxX >= b.minX) &&
+                               (a.minY <= b.maxY && a.maxY >= b.minY) &&
+                               (a.minZ <= b.maxZ && a.maxZ >= b.minZ);
+                        */
+                        if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() ){
+
+                        }
+                    }
+                }
+            }
+            
         }else{
             throw new ContainerException();
         }
