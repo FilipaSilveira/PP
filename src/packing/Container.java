@@ -31,25 +31,37 @@ public class Container extends Box implements IContainer{
 
     
     @Override
-    public boolean addItem(IItem iitem, IPosition ip, Color color) throws ContainerException {
-        if(this.NumItems < MAX_ITEMS){
-            this.item[this.NumItems] = new ItemPacked(ip,color,iitem);
-            return true;
+    public boolean addItem(IItem iitem, IPosition ip, Color color) throws containerException {
+        if( (iitem != null && ip != null && color != null) || this.isClosed() ){
+            if(this.NumItems < MAX_ITEMS){
+                this.item[this.NumItems] = new ItemPacked(ip,color,iitem);
+                this.NumItems ++;
+                
+                return true;
+            }
+            return false;
+        }else{
+            throw new containerException();
         }
-        return false;
+        
     }
 
     @Override
     public boolean removeItem(IItem iitem) throws ContainerException {
-        for (int i = 0; i < this.NumItems; i++) {
-            if (this.item[i] == iitem) {
-                for (int j = i; j < this.NumItems - 1; j++) {
-                    this.item[i] = this.item[i + 1];
-                    this.NumItems--;
+        if( (iitem != null) || this.isClosed() ){
+            for (int i = 0; i < this.NumItems; i++) {
+                if (this.item[i] == iitem) {
+                    for (int j = i; j < this.NumItems - 1; j++) {
+                        this.item[i] = this.item[i + 1];
+                        this.NumItems--;
+                    }
+                    return true;
                 }
-                return true;
             }
+        }else{
+            throw new containerException();
         }
+        
         return false;
     }
     
