@@ -1,3 +1,13 @@
+/*
+* Nome: Ana Filipa Sousa Silveira
+* Número: 8160040
+* Turma: LSIRC
+*
+* Nome: Rafael António Alves Maia
+* Número: 8160489
+* Turma: LSIRC
+*/
+
 package packing;
 
 import exceptions.*;
@@ -29,11 +39,18 @@ public class Container extends Box implements IContainer{
         this.id++;
     }
 
-    
+    /**
+     * Adiciona um novo ItemPacked ao contentor
+     * @param iitem
+     * @param ip
+     * @param color
+     * @return false -> caso o item já exista no contentor e true -> quando o item é inserido
+     * @throws containerException -> caso algum parametro estiver a nulo ou o contentor estiver fechado
+     */
     @Override
     public boolean addItem(IItem iitem, IPosition ip, Color color) throws containerException {
         if( (iitem != null && ip != null && color != null) || this.isClosed() ){
-            
+    
             for(int i=0; i<this.NumItems; i++){
                 if(this.item[i].getItem().getReference().equals(iitem.getReference())){
                     return false; // este item já existe dentro do container
@@ -43,28 +60,34 @@ public class Container extends Box implements IContainer{
             if(this.NumItems < MAX_ITEMS){
                 this.item[this.NumItems] = new ItemPacked(ip,color,iitem);
                 this.NumItems ++;
-                this.updateOccupiedVolume();
+                this.updateOccupiedVolume(); //atualiza o volume ocupado no contentor
                 return true;
             }
             
             return false;
-            // what is a collection ?
+            // what is a collection?
             
         }else{
             throw new containerException();
         }
     }
 
+    /**
+     * Remove items que foram adicionados ao contentor
+     * @param iitem que foi adicionado
+     * @return false -> se o item não existir no contentor e true -> se for removido
+     * @throws ContainerException -> se o parametro for nulo ou o contentor estiver fechado
+     */
     @Override
     public boolean removeItem(IItem iitem) throws ContainerException {
-        if( (iitem != null) || this.isClosed() ){
+        if( (iitem != null) || this.isClosed() ){ //se for nulo ou se o contentor estiver fechado 
             for (int i = 0; i < this.NumItems; i++) {
                 if (this.item[i] == iitem) {
                     for (int j = i; j < this.NumItems - 1; j++) {
                         this.item[i] = this.item[i + 1];
                     }
                     this.NumItems--;
-                    this.updateOccupiedVolume();
+                    this.updateOccupiedVolume(); //atualiza o volume caso seja removido o item
                     return true;
                 }
             }
@@ -92,6 +115,7 @@ public class Container extends Box implements IContainer{
     }
     
     /**
+     * comparação entre caixas para overlaping
      * True -> interceta
      * False -> não interceta
      * @return 
@@ -99,69 +123,49 @@ public class Container extends Box implements IContainer{
     public boolean isOverlaping(){
         for(int i=0; i<this.NumItems - 1; i++){
             for (int j = i + 1; j < this.NumItems; j++) {
-                if(i != j){ // se forem caixas diferentes                  
-                    /*
-                    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
-                    a -> i
-                    b -> j
-                    return (a.minX <= b.maxX && a.maxX >= b.minX) &&
-                           (a.minY <= b.maxY && a.maxY >= b.minY) &&
-                           (a.minZ <= b.maxZ && a.maxZ >= b.minZ);
-                    */
+                if(i != j){ //se forem caixas diferentes                  
                     if( (this.item[i].getPosition().getX() <= this.item[j].getPosition().getX() + this.item[j].getItem().getLenght() && this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() >= this.item[j].getPosition().getX()) &&
                         (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
                         (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
                       ){
-                        return true; // intercepta
+                        return true; //intercepta
                     }
                 }
             }
         }
-        return false; // não intercepta
+        return false; //não intercepta
     }
     
-
+    /**
+     * 
+     * @throws containerException 
+     * @throws positionException -> se algum item estiver fora do contentor ou subreposto noutro item
+     */
     @Override
     public void validate() throws containerException, positionException{
-        if(getRemainingVolume() >= 0){ //não tem nada fora
-            /*for(int i=0; i<this.NumItems; i++){
-                // se estiver fora do contentor
-                if(this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() > this.getLenght() 
-                   || this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() > this.getDepth() 
-                   || this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() > this.getHeight()){ 
-                    throw new positionException();
-                }
-            }*/
+        if(getRemainingVolume() >= 0){
+            //se os itens não estiverem todos dentro do contentor
             if (isOutsideContainer()){
                 throw new positionException();
             }
-            
-            // comparação entre caixas para overlaping
-            /*for(int i=0; i<this.NumItems - 1; i++){
-                for (int j = i + 1; j < this.NumItems; j++) {
-                    if(i != j){ // se forem caixas diferentes                  
-                        if( (this.item[i].getPosition().getX() <= this.item[j].getPosition().getX() + this.item[j].getItem().getLenght() && this.item[i].getPosition().getX() + this.item[i].getItem().getLenght() >= this.item[j].getPosition().getX()) &&
-                            (this.item[i].getPosition().getY() <= this.item[j].getPosition().getY() + this.item[j].getItem().getDepth()&& this.item[i].getPosition().getY() + this.item[i].getItem().getDepth() >= this.item[j].getPosition().getY()) &&
-                            (this.item[i].getPosition().getZ() <= this.item[j].getPosition().getZ() + this.item[j].getItem().getHeight()&& this.item[i].getPosition().getZ() + this.item[i].getItem().getHeight() >= this.item[j].getPosition().getZ())
-                          ){
-                            throw new positionException();
-                        }
-                    }
-                }
-            }*/
+            //se houver itens sobrepostos no contentor
             if(isOverlaping()){
                 throw new positionException();
             }
-            
         }else{
+            //se o volume não for menor ou igual ao volume atual
             throw new containerException();
         }
     }
 
-    // usar validate() para ver se se pode fechar o contentor ???????????
+    /**
+     * Fechar o contentor e verificar se este pode ser fechado
+     * @throws containerException
+     * @throws positionException -> se algum item estiver fora do contentor ou subreposto noutro item
+     */
     @Override
     public void close() throws containerException, positionException {
-        if ( this.getOccupiedVolume() > this.getVolume() ){ // if volume is greater than current volume
+        if ( this.getOccupiedVolume() > this.getVolume() ){ //se o volume for maior que o volume atual
             throw new containerException();
         }
         if(isOutsideContainer()){
@@ -170,19 +174,27 @@ public class Container extends Box implements IContainer{
         if(isOverlaping()){
             throw new positionException();
         }
-        this.status = containerStatus.CLOSED;
+        this.status = containerStatus.CLOSED; //atualiza o status para CLOSED 
     }
 
+    /**
+     * Retorna o item com uma determinada referência
+     * @param string
+     * @return o item caso este exista ou null se não existir
+     */
     @Override
     public IItem getItem(String string) {
         for(int i=0; i<this.NumItems; i++){
-            if(this.item[i].getItem().getReference().equals(string)){
+            if(this.item[i].getItem().getReference().equals(string)){ //compara as referencias (identificador exclusivo) do item
                 return this.item[i].getItem();
             }
         }
         return null;
     }
 
+    /**
+     * Atualiza o volume ocupado pelos items (ao adicionar ou remover items)
+     */
     public void updateOccupiedVolume() {
         int occupied_Volume = 0;
         for(int i=0; i<this.NumItems; ++i){
@@ -191,31 +203,55 @@ public class Container extends Box implements IContainer{
         this.occupiedVolume = occupied_Volume;
     }
     
+    /**
+     * 
+     * @return -> o volume ocupado no contentor
+     */
     @Override
     public int getOccupiedVolume() {
         return this.occupiedVolume;
     }
 
+    /**
+     * Dá um array (sem posições nulas) para os itens embalados no contentor
+     * @return -> os itens embalados no contentor
+     */
     @Override
     public IItemPacked[] getPackedItems() {
         return this.item;
     }
 
+    /**
+     * 
+     * @return -> referência do contentor
+     */
     @Override
     public String getReference() {
         return this.reference;
     }
 
+    /**
+     * 
+     * @return -> número de itens no contentor
+     */
     @Override
     public int getNumberOfItems() {
         return this.NumItems;
     }
 
+    /**
+     * 
+     * @return volume restante no contentor
+     */
     @Override
     public int getRemainingVolume() {
         return (this.getVolume())-(this.getOccupiedVolume());
     }
 
+    /**
+     * Retornar se o contentor estiver fechado
+     * @return true -> se o contentor estiver fechado false -> caso não esteja
+     */
     @Override
     public boolean isClosed() {
         if(this.status == containerStatus.CLOSED){
@@ -226,15 +262,10 @@ public class Container extends Box implements IContainer{
     
     @Override
     public String toString(){
-        
         String string = "";
-        
-        //System.out.println(this.NumItems);
         for(int i = 0; i < this.NumItems; i++){
-            
             string += this.item[i].getItem().getDescription();
         }
-       
         return "Dimensions(L,D,H,V): " + this.getLenght() +", "+  this.getDepth() +", "+ this.getHeight() +", "+ this.getVolume() +", "+ 
                "\nReference: " + this.reference + 
                "\nEstado: " + this.status + 

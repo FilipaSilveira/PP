@@ -1,3 +1,13 @@
+/*
+* Nome: Ana Filipa Sousa Silveira
+* Número: 8160040
+* Turma: LSIRC
+*
+* Nome: Rafael António Alves Maia
+* Número: 8160489
+* Turma: LSIRC
+*/
+
 package shippingOrder;
 
 import base.Customer;
@@ -33,6 +43,13 @@ public class ShippingOrder implements IShippingOrder{
         
     }
     
+    /**
+     * Adiciona um novo contentor a ShippingOrder
+     * @param ic
+     * @return false -> se o contentor já existir na ShippingOrder ou true -> so o contentor for inserido na ShippingOrder
+     * @throws orderException -> se o status do pedido não for igual a IN_TREATMENT
+     * @throws containerException -> se algum parametro for nulo ou o contentor não estiver fechado
+     */
     @Override
     public boolean addContainer(IContainer ic) throws orderException, containerException {
         if(this.status != OrderStatus.IN_TREATMENT){
@@ -59,8 +76,9 @@ public class ShippingOrder implements IShippingOrder{
             this.numContainers++;
             return true;
             
-        }else{
-            Container[] newContainer = new Container[MAX_CONTAINERS + 5]; // novo contentor com mais 5 espaços
+        }else{ //aumenta o contentor com mais 5 espaços
+            Container[] newContainer = new Container[MAX_CONTAINERS + 5];
+            //copia o arraey Containers (posição 0) para o newContainer (posição 0) com o tamanho de Containers 
             System.arraycopy(this.Containers, 0, newContainer, 0, this.Containers.length);
             this.Containers = newContainer;
             this.Containers[this.numContainers] = (Container)ic;
@@ -70,9 +88,15 @@ public class ShippingOrder implements IShippingOrder{
         }
     }
 
+    /**
+     * Remove um contentor da shipping order
+     * @param ic
+     * @return true -> se o contentor for removido ou false -> se não for
+     * @throws orderException -> se o status não for IN_TREATMENT
+     * @throws containerException -> se o parâmetro for nulo
+     */
     @Override
     public boolean removeContainer(IContainer ic) throws orderException, containerException {
-        
         if(this.status != OrderStatus.IN_TREATMENT){
             throw new orderException();
         }
@@ -80,7 +104,8 @@ public class ShippingOrder implements IShippingOrder{
             throw new containerException();
         }    
         for (int i = 0; i < this.numContainers; i++) {
-            if (this.Containers[i].getReference().equals(ic.getReference())) { // encontra contentor
+            //encontra contentor comparando as referencias
+            if (this.Containers[i].getReference().equals(ic.getReference())) { 
                 for (int j = i; j < this.numContainers - 1; j++) {
                     this.Containers[i] = this.Containers[i + 1];
                 }
@@ -91,6 +116,11 @@ public class ShippingOrder implements IShippingOrder{
         return false;
     }
 
+    /**
+     * Verifica se o contentor existe na shipping order
+     * @param ic
+     * @return true -> se o contentor existir ou false -> se não existir
+     */
     @Override
     public boolean existsContainer(IContainer ic) {
         for(int i=0; i<this.numContainers; i++){
@@ -101,6 +131,11 @@ public class ShippingOrder implements IShippingOrder{
         return false;
     }
 
+    /**
+     * Procura um determinado contentor com base na sua referência
+     * @param string
+     * @return -> o número do índice que se refere à posição ocupada pelo contentor na lista de shipping order
+     */
     @Override
     public int findContainer(String string) {
         for(int i=0; i<this.numContainers; i++){
@@ -131,7 +166,14 @@ public class ShippingOrder implements IShippingOrder{
         return this.status;
     }
 
-    @Override // TODO: check if it's correct in the end
+    /**
+     * Muda o estado
+     * @param os
+     * @throws orderException -> 
+     * @throws containerException -> 
+     * @throws positionException -> 
+     */
+    @Override //TODO: check if it's correct in the end
     public void setStatus(OrderStatus os) throws orderException, containerException, positionException {
          if( os == OrderStatus.IN_TREATMENT ){
             
@@ -163,34 +205,38 @@ public class ShippingOrder implements IShippingOrder{
         return this.idContainer;
     }
 
+    /**
+     * 
+     * @return -> um array (sem posições nulas) para os contentores na shipping order
+     */
     @Override
     public IContainer[] getContainers() {
-        /*Container allContainers[] = new Container[this.numContainers];
-        allContainers = this.Containers;
-        
-        return (IContainer[])allContainers;*/
         return this.Containers.clone();
     }
 
+    /**
+     * Verifica se algum contentor é inválido
+     * @throws containerException
+     * @throws positionException 
+     */
     @Override
     public void validate() throws containerException, positionException {
        for(int i=0; i<this.numContainers; ++i){
-            /*if(this.Containers[i].isClosed() == false){
-                System.out.println("Os contentores nao estao todos fechados!");
-            }*/
             this.Containers[i].validate();
         } 
     }
 
+    /**
+     * uma string com um resumo dos contentores existentes e os seus itens
+     * @return 
+     */
     @Override
     public String summary() {
         String string = "";
-        
         for(int i = 0; i < this.numContainers; i++){
             string += this.Containers[i].toString();
             string += "\n\n";
         }
-
         return string;
     }
 }

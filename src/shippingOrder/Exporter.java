@@ -1,3 +1,13 @@
+/*
+* Nome: Ana Filipa Sousa Silveira
+* Número: 8160040
+* Turma: LSIRC
+*
+* Nome: Rafael António Alves Maia
+* Número: 8160489
+* Turma: LSIRC
+*/
+
 package shippingOrder;
 
 import java.io.FileWriter;
@@ -41,6 +51,8 @@ public class Exporter implements IExporter{
         obj.put("destination", destinationVar);
         
         JSONArray containersVar = new JSONArray();
+       
+        //não está a ecrever para o ficheiro
         /*
         // for beggin
         for (IContainer cont: iso.getContainers()) {
