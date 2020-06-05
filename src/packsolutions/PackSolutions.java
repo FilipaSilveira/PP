@@ -1,3 +1,13 @@
+/*
+* Nome: Ana Filipa Sousa Silveira
+* Número: 8160040
+* Turma: LSIRC
+*
+* Nome: Rafael António Alves Maia
+* Número: 8160489
+* Turma: LSIRC
+*/
+
 package packsolutions;
 
 import base.*;
@@ -17,6 +27,7 @@ import packing_gui.*;
  * @author Filipa
  */
 public class PackSolutions {
+
     public static void main(String[] args) {
         
         // Address
@@ -46,7 +57,7 @@ public class PackSolutions {
         Container con_3 = new Container(2, 2, 2, 2); // volume tem que ser 8
         Container con_4 = new Container(2, 2, 2, 2); // volume tem que ser 8
         
-        System.out.println(con_1.getVolume()); // retorn volume certo 
+        System.out.println(con_1.getVolume()); // retorna volume certo 
         
         // ShippingOrder
         ShippingOrder so_1 = new ShippingOrder(cliente_1, cliente_2);
@@ -82,9 +93,6 @@ public class PackSolutions {
         
         // add Container to ShipingOrder
         try {
-            
-            //so_1.setStatus(OrderStatus.IN_TREATMENT);
-            
             System.out.println(so_1.summary());
             so_1.addContainer(con_1);
             System.out.println(so_1.summary());
@@ -92,15 +100,16 @@ public class PackSolutions {
             // não posso adicionar o mesmo contentor duas vezes
             System.out.println(so_1.addContainer(con_1)); 
             
-            
             so_1.addContainer(con_1);
             so_1.addContainer(con_2);
             so_1.addContainer(con_3);
             so_1.addContainer(con_4);
             
+          
             System.out.println("----- Final -----");
             System.out.println(so_1.summary());
             
+            //ficheiro
             Exporter exportJson = new Exporter();
             
             PackingGUI gui = new PackingGUI();
@@ -135,8 +144,7 @@ public class PackSolutions {
             }
             
             
-            
-            try { // tries to save to a file
+            try { //tries to save to a file
                 
                 exportJson.export(so_1);
                 System.out.println("Exported!");
