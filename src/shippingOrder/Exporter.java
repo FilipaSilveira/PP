@@ -41,10 +41,14 @@ public class Exporter implements IExporter{
         obj.put("destination", destinationVar);
         
         JSONArray containersVar = new JSONArray();
-        /*
+        
         // for beggin
         for (IContainer cont: iso.getContainers()) {
             JSONObject containerVar = new JSONObject();
+            
+            if(cont == null){
+                break;
+            }
             
             containerVar.put("volume",cont.getVolume());
             containerVar.put("reference",cont.getReference());
@@ -59,15 +63,19 @@ public class Exporter implements IExporter{
                 
                 JSONObject itemVar = new JSONObject();
                 
+                if(item == null){
+                    break;
+                }
+                
                 itemVar.put("reference", item.getItem().getReference());
                 itemVar.put("depth", item.getItem().getDepth());
-                itemVar.put("color", item.getColor());
+                itemVar.put("color", item.getColor().toString());
                 itemVar.put("x", item.getPosition().getX());
                 itemVar.put("length", item.getItem().getLenght());
                 itemVar.put("y", item.getPosition().getY());
                 itemVar.put("description", item.getItem().getDescription());
                 itemVar.put("z", item.getPosition().getZ());
-                itemVar.put("colorEdge", item.getColor());
+                itemVar.put("colorEdge", item.getColor().toString());
                 itemVar.put("height", item.getItem().getHeight());
                 
                 itemsVar.add(itemVar);
@@ -81,10 +89,10 @@ public class Exporter implements IExporter{
             containersVar.add(containerVar);
         }
         // for end
-        */
+        
         obj.put("containers",containersVar);
         
-        obj.put("status",iso.getStatus());
+        obj.put("status",iso.getStatus().toString());
         
         JSONObject customerVar = new JSONObject();
         

@@ -104,10 +104,24 @@ public class PackSolutions {
             Exporter exportJson = new Exporter();
             
             PackingGUI gui = new PackingGUI();
+            String filepath = "example.json"; 
             
-            String filepath = "example.json";
+            /*if(gui.validate(filepath)){ // mostra exemplo.json
+                try {
+                
+                gui.render(filepath);
+                
+
+                } catch (IOException ex) {
+                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }*/
             
-            if(gui.validate(filepath)){
+            filepath = "shippingOrder.json";
+            
+            if(gui.validate(filepath)){ // mostra a minha INFO!
                 try {
                 
                 gui.render(filepath);
