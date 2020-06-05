@@ -9,6 +9,7 @@ import order.base.OrderStatus;
 import packing.*;
 import shippingOrder.*;
 import order.packing.*;
+import org.json.simple.parser.ParseException;
 import packing_gui.*;
 
 /**
@@ -101,6 +102,25 @@ public class PackSolutions {
             System.out.println(so_1.summary());
             
             Exporter exportJson = new Exporter();
+            
+            PackingGUI gui = new PackingGUI();
+            
+            String filepath = "example.json";
+            
+            if(gui.validate(filepath)){
+                try {
+                
+                gui.render(filepath);
+                
+
+                } catch (IOException ex) {
+                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
             
             try { // tries to save to a file
                 

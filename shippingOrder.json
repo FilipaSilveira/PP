@@ -1,0 +1,1 @@
+{"orderId":0,"destination":{"address":{"country":"PT","number":2,"stress":"b2","city":"Lisboa","state":"b2"},"name":"cli_2"},"containers":[],"status":IN_TREATMENT,"customer":{"address":{"country":"PT","number":1,"stress":"a1","city":"Coimbra","state":"a1"},"name":"cli_1","id":0,"billingAddress":{"country":"PT","number":1,"stress":"a1","city":"Coimbra","state":"a1"}}}

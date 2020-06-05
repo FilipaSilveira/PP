@@ -2,10 +2,13 @@ package shippingOrder;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import order.packing.Color;
 import order.packing.IContainer;
 import order.packing.IItemPacked;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import packing.Container;
+import packing.ItemPacked;
 import shippingorder.IExporter;
 import shippingorder.IShippingOrder;
 
@@ -17,11 +20,10 @@ public class Exporter implements IExporter{
 
     @Override
     public void export(IShippingOrder iso) throws IOException {
-        iso = (ShippingOrder) iso;
+        //iso = (ShippingOrder) iso;
         FileWriter file;
         
         JSONObject obj = new JSONObject();
-        obj.put("aaaaaaaa","aaaaaa");
         obj.put("orderId",iso.getId());
         
         JSONObject destinationVar = new JSONObject();
@@ -54,6 +56,7 @@ public class Exporter implements IExporter{
             JSONArray itemsVar = new JSONArray();
             
             for (IItemPacked item: cont.getPackedItems()) {
+                
                 JSONObject itemVar = new JSONObject();
                 
                 itemVar.put("reference", item.getItem().getReference());
@@ -78,7 +81,7 @@ public class Exporter implements IExporter{
             containersVar.add(containerVar);
         }
         // for end
-        
+        */
         obj.put("containers",containersVar);
         
         obj.put("status",iso.getStatus());
@@ -109,10 +112,11 @@ public class Exporter implements IExporter{
         customerVar.put("billingAddress", billingAddressVar);
         
         obj.put("customer",customerVar);
- */
+ 
         // Constructs a FileWriter given a file name, using the platform's default charset
         file = new FileWriter("shippingOrder.json");
         file.write(obj.toJSONString());
+        file.close();
         
     }
     
