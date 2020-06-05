@@ -1,7 +1,6 @@
 package packing;
 
 import exceptions.*;
-import order.exceptions.PositionException;
 import order.packing.Color;
 import order.packing.IContainer;
 import order.packing.IItem;
@@ -21,6 +20,7 @@ public class Container extends Box implements IContainer{
     private static final int MAX_ITEMS = 50;
     private String reference = "container";
     private containerStatus status = containerStatus.OPEN;
+    private int occupiedVolume = 0;
 
     public Container(int Depth, int Height, int Lenght, int Volume) {
         super(Depth, Height, Lenght, Volume);
@@ -36,7 +36,7 @@ public class Container extends Box implements IContainer{
             if(this.NumItems < MAX_ITEMS){
                 this.item[this.NumItems] = new ItemPacked(ip,color,iitem);
                 this.NumItems ++;
-                
+                this.updateOccupiedVolume();
                 return true;
             }
             return false;
@@ -53,15 +53,15 @@ public class Container extends Box implements IContainer{
                 if (this.item[i] == iitem) {
                     for (int j = i; j < this.NumItems - 1; j++) {
                         this.item[i] = this.item[i + 1];
-                        this.NumItems--;
                     }
+                    this.NumItems--;
+                    this.updateOccupiedVolume();
                     return true;
                 }
             }
         }else{
             throw new containerException();
         }
-        
         return false;
     }
     
@@ -174,13 +174,17 @@ public class Container extends Box implements IContainer{
         return null;
     }
 
+    public void updateOccupiedVolume() {
+        int occupied_Volume = 0;
+        for(int i=0; i<this.NumItems; ++i){
+            occupied_Volume += this.item[i].getItem().getVolume();
+        }
+        this.occupiedVolume = occupied_Volume;
+    }
+    
     @Override
     public int getOccupiedVolume() {
-        int occupiedVolume = 0;
-        for(int i=0; i<this.NumItems; ++i){
-            occupiedVolume += this.item[i].getItem().getVolume();
-        }
-        return occupiedVolume;
+        return this.occupiedVolume;
     }
 
     @Override
@@ -209,5 +213,21 @@ public class Container extends Box implements IContainer{
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public String toString(){
+        
+        String string = "";
+        
+        System.out.println(this.NumItems);
+        for(int i = 0; i < this.NumItems; i++){
+            
+            string += this.item[i].getItem().toString();
+        }
+       
+        return "Dimensões: " + super.toString() + "\nReferência: " 
+                + this.reference + "\nEstado: " + this.status + "\nItems:" + 
+                string;
     }
 }
