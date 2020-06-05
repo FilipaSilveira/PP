@@ -50,7 +50,7 @@ public class Box implements IBox{
     
     /**
      *
-     * @return
+     * @return as informações da caixa
      */
     @Override
     public String toString(){

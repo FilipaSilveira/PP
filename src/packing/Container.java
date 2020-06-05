@@ -41,11 +41,11 @@ public class Container extends Box implements IContainer{
 
     /**
      * Adiciona um novo ItemPacked ao contentor
-     * @param iitem
-     * @param ip
-     * @param color
-     * @return false -> caso o item já exista no contentor e true -> quando o item é inserido
-     * @throws containerException -> caso algum parametro estiver a nulo ou o contentor estiver fechado
+     * @param iitem item a ser adicionado
+     * @param ip posição em que o item será colocado
+     * @param color cor usada para o item
+     * @return false caso o item já exista no contentor e true - quando o item é inserido
+     * @throws containerException caso algum parametro estiver a nulo ou o contentor estiver fechado
      */
     @Override
     public boolean addItem(IItem iitem, IPosition ip, Color color) throws containerException {
@@ -74,9 +74,9 @@ public class Container extends Box implements IContainer{
 
     /**
      * Remove items que foram adicionados ao contentor
-     * @param iitem que foi adicionado
-     * @return false -> se o item não existir no contentor e true -> se for removido
-     * @throws ContainerException -> se o parametro for nulo ou o contentor estiver fechado
+     * @param iitem que irá ser removido
+     * @return false se o item não existir no contentor e true - se for removido
+     * @throws ContainerException se o parametro for nulo ou o contentor estiver fechado
      */
     @Override
     public boolean removeItem(IItem iitem) throws ContainerException {
@@ -98,9 +98,7 @@ public class Container extends Box implements IContainer{
     }
     
     /**
-     * retorna True se houver algo fora do contentor
-     * se não retorna False 
-     * @return 
+     * @return true se estiver fora do contentor false - se não estiver
      */
     public boolean isOutsideContainer(){
         for(int i=0; i<this.NumItems; i++){
@@ -116,9 +114,7 @@ public class Container extends Box implements IContainer{
     
     /**
      * comparação entre caixas para overlaping
-     * True -> interceta
-     * False -> não interceta
-     * @return 
+     * @return True - interceta ou False - não interceta
      */
     public boolean isOverlaping(){
         for(int i=0; i<this.NumItems - 1; i++){
@@ -139,7 +135,7 @@ public class Container extends Box implements IContainer{
     /**
      * 
      * @throws containerException 
-     * @throws positionException -> se algum item estiver fora do contentor ou subreposto noutro item
+     * @throws positionException se algum item estiver fora do contentor ou subreposto noutro item
      */
     @Override
     public void validate() throws containerException, positionException{
@@ -161,7 +157,7 @@ public class Container extends Box implements IContainer{
     /**
      * Fechar o contentor e verificar se este pode ser fechado
      * @throws containerException
-     * @throws positionException -> se algum item estiver fora do contentor ou subreposto noutro item
+     * @throws positionException se algum item estiver fora do contentor ou subreposto noutro item
      */
     @Override
     public void close() throws containerException, positionException {
@@ -179,7 +175,7 @@ public class Container extends Box implements IContainer{
 
     /**
      * Retorna o item com uma determinada referência
-     * @param string
+     * @param string referência - (identificador exclusivo) do item
      * @return o item caso este exista ou null se não existir
      */
     @Override
@@ -205,7 +201,7 @@ public class Container extends Box implements IContainer{
     
     /**
      * 
-     * @return -> o volume ocupado no contentor
+     * @return o volume ocupado no contentor
      */
     @Override
     public int getOccupiedVolume() {
@@ -214,7 +210,7 @@ public class Container extends Box implements IContainer{
 
     /**
      * Dá um array (sem posições nulas) para os itens embalados no contentor
-     * @return -> os itens embalados no contentor
+     * @return os itens embalados no contentor
      */
     @Override
     public IItemPacked[] getPackedItems() {
@@ -223,7 +219,7 @@ public class Container extends Box implements IContainer{
 
     /**
      * 
-     * @return -> referência do contentor
+     * @return referência do contentor
      */
     @Override
     public String getReference() {
@@ -232,7 +228,7 @@ public class Container extends Box implements IContainer{
 
     /**
      * 
-     * @return -> número de itens no contentor
+     * @return número de itens no contentor
      */
     @Override
     public int getNumberOfItems() {
@@ -250,7 +246,7 @@ public class Container extends Box implements IContainer{
 
     /**
      * Retornar se o contentor estiver fechado
-     * @return true -> se o contentor estiver fechado false -> caso não esteja
+     * @return true se o contentor estiver fechado false - caso não esteja
      */
     @Override
     public boolean isClosed() {

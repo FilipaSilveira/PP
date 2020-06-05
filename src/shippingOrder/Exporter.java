@@ -52,7 +52,6 @@ public class Exporter implements IExporter{
         
         JSONArray containersVar = new JSONArray();
        
-        //não está a ecrever para o ficheiro
         /*
         // for beggin
         for (IContainer cont: iso.getContainers()) {

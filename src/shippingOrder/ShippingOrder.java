@@ -45,10 +45,10 @@ public class ShippingOrder implements IShippingOrder{
     
     /**
      * Adiciona um novo contentor a ShippingOrder
-     * @param ic
-     * @return false -> se o contentor já existir na ShippingOrder ou true -> so o contentor for inserido na ShippingOrder
-     * @throws orderException -> se o status do pedido não for igual a IN_TREATMENT
-     * @throws containerException -> se algum parametro for nulo ou o contentor não estiver fechado
+     * @param ic contentor a ser adicionado
+     * @return false se o contentor já existir na ShippingOrder ou true - so o contentor for inserido na ShippingOrder
+     * @throws orderException se o status do pedido não for igual a IN_TREATMENT
+     * @throws containerException se algum parametro for nulo ou o contentor não estiver fechado
      */
     @Override
     public boolean addContainer(IContainer ic) throws orderException, containerException {
@@ -90,10 +90,10 @@ public class ShippingOrder implements IShippingOrder{
 
     /**
      * Remove um contentor da shipping order
-     * @param ic
-     * @return true -> se o contentor for removido ou false -> se não for
-     * @throws orderException -> se o status não for IN_TREATMENT
-     * @throws containerException -> se o parâmetro for nulo
+     * @param ic contentor a ser removido
+     * @return true - se o contentor for removido ou false - se não for
+     * @throws orderException se o status não for IN_TREATMENT
+     * @throws containerException se o parâmetro for nulo
      */
     @Override
     public boolean removeContainer(IContainer ic) throws orderException, containerException {
@@ -118,8 +118,8 @@ public class ShippingOrder implements IShippingOrder{
 
     /**
      * Verifica se o contentor existe na shipping order
-     * @param ic
-     * @return true -> se o contentor existir ou false -> se não existir
+     * @param ic contentor a verificar se existe
+     * @return true - se o contentor existir ou false - se não existir
      */
     @Override
     public boolean existsContainer(IContainer ic) {
@@ -133,8 +133,8 @@ public class ShippingOrder implements IShippingOrder{
 
     /**
      * Procura um determinado contentor com base na sua referência
-     * @param string
-     * @return -> o número do índice que se refere à posição ocupada pelo contentor na lista de shipping order
+     * @param string referencia do contentor a encontrar
+     * @return - o número do índice que se refere à posição ocupada pelo contentor na lista de shipping order
      */
     @Override
     public int findContainer(String string) {
@@ -168,10 +168,10 @@ public class ShippingOrder implements IShippingOrder{
 
     /**
      * Muda o estado
-     * @param os
-     * @throws orderException -> 
-     * @throws containerException -> 
-     * @throws positionException -> 
+     * @param os order status
+     * @throws orderException
+     * @throws containerException
+     * @throws positionException
      */
     @Override //TODO: check if it's correct in the end
     public void setStatus(OrderStatus os) throws orderException, containerException, positionException {
@@ -207,7 +207,7 @@ public class ShippingOrder implements IShippingOrder{
 
     /**
      * 
-     * @return -> um array (sem posições nulas) para os contentores na shipping order
+     * @return um array (sem posições nulas) para os contentores na shipping order
      */
     @Override
     public IContainer[] getContainers() {
@@ -227,8 +227,8 @@ public class ShippingOrder implements IShippingOrder{
     }
 
     /**
-     * uma string com um resumo dos contentores existentes e os seus itens
-     * @return 
+     * 
+     * @return uma string com um resumo dos contentores existentes e os seus itens
      */
     @Override
     public String summary() {
@@ -240,4 +240,3 @@ public class ShippingOrder implements IShippingOrder{
         return string;
     }
 }
-

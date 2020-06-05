@@ -41,10 +41,6 @@ public class Item extends Box implements IItem{
         this.description=string;
     }
     
-    /**
-     *
-     * @return
-     */
     @Override
      public String toString(){
         return "Dimensions: " + super.toString() + 
