@@ -20,7 +20,7 @@ public class ShippingOrder implements IShippingOrder{
     private static int id = 0;
     private final int idContainer;
     Customer customer, destination;
-    private static int MAX_CONTAINERS = 3;
+    private static int MAX_CONTAINERS = 10;
     private int numContainers = 0;
 
     public ShippingOrder(Customer customer, Customer destination) {
@@ -103,11 +103,9 @@ public class ShippingOrder implements IShippingOrder{
 
     @Override
     public int findContainer(String string) {
-        int pos;
         for(int i=0; i<this.numContainers; i++){
             if(this.Containers[i].getReference().equals(string)){
-                pos = i;
-                return pos; //testar return i;
+                return i;
             }
         }
         return -1;
@@ -133,7 +131,7 @@ public class ShippingOrder implements IShippingOrder{
         return this.status;
     }
 
-    @Override
+    @Override // TODO: check if it's correct in the end
     public void setStatus(OrderStatus os) throws orderException, containerException, positionException {
          if( os == OrderStatus.IN_TREATMENT ){
             
@@ -167,18 +165,20 @@ public class ShippingOrder implements IShippingOrder{
 
     @Override
     public IContainer[] getContainers() {
-        Container allContainers[] = new Container[this.numContainers];
+        /*Container allContainers[] = new Container[this.numContainers];
         allContainers = this.Containers;
         
-        return (IContainer[])allContainers;
+        return (IContainer[])allContainers;*/
+        return this.Containers.clone();
     }
 
     @Override
     public void validate() throws containerException, positionException {
        for(int i=0; i<this.numContainers; ++i){
-            if(this.Containers[i].isClosed() == false){
+            /*if(this.Containers[i].isClosed() == false){
                 System.out.println("Os contentores nao estao todos fechados!");
-            }
+            }*/
+            this.Containers[i].validate();
         } 
     }
 

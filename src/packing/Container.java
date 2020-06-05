@@ -17,7 +17,7 @@ public class Container extends Box implements IContainer{
     private ItemPacked[] item;
     private int NumItems = 0;
     private static int id = 0;
-    private static final int MAX_ITEMS = 50;
+    private static final int MAX_ITEMS = 10;
     private String reference = "container";
     private containerStatus status = containerStatus.OPEN;
     private int occupiedVolume = 0;
@@ -33,17 +33,26 @@ public class Container extends Box implements IContainer{
     @Override
     public boolean addItem(IItem iitem, IPosition ip, Color color) throws containerException {
         if( (iitem != null && ip != null && color != null) || this.isClosed() ){
+            
+            for(int i=0; i<this.NumItems; i++){
+                if(this.item[i].getItem().getReference().equals(iitem.getReference())){
+                    return false; // este item já existe dentro do container
+                }
+            }
+            
             if(this.NumItems < MAX_ITEMS){
                 this.item[this.NumItems] = new ItemPacked(ip,color,iitem);
                 this.NumItems ++;
                 this.updateOccupiedVolume();
                 return true;
-            }// TODO: else aumentar o tamanho do array
+            }
+            
             return false;
+            // what is a collection ?
+            
         }else{
             throw new containerException();
         }
-        
     }
 
     @Override
@@ -59,10 +68,10 @@ public class Container extends Box implements IContainer{
                     return true;
                 }
             }
+            return false;
         }else{
             throw new containerException();
         }
-        return false;
     }
     
     /**
