@@ -38,7 +38,7 @@ public class Container extends Box implements IContainer{
                 this.NumItems ++;
                 this.updateOccupiedVolume();
                 return true;
-            }
+            }// TODO: else aumentar o tamanho do array
             return false;
         }else{
             throw new containerException();
@@ -223,11 +223,12 @@ public class Container extends Box implements IContainer{
         System.out.println(this.NumItems);
         for(int i = 0; i < this.NumItems; i++){
             
-            string += this.item[i].getItem().toString();
+            string += this.item[i].getItem().getDescription();
         }
        
-        return "Dimensões: " + super.toString() + "\nReferência: " 
-                + this.reference + "\nEstado: " + this.status + "\nItems:" + 
-                string;
+        return "Dimensions(L,D,H,V): " + this.getLenght() +", "+  this.getDepth() +", "+ this.getHeight() +", "+ this.getVolume() +", "+ 
+               "\nReference: " + this.reference + 
+               "\nEstado: " + this.status + 
+               "\nItems:" + string;
     }
 }

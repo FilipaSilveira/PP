@@ -47,4 +47,10 @@ public class ItemPacked implements IItemPacked{
         this.position = ip;
     }
     
+    @Override
+    public String toString(){
+     return "Color: " + this.color + 
+            "\nItem: " + this.item.toString() + 
+            "\nPosition: " + this.position;
+    }
 }
