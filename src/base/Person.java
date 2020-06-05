@@ -38,8 +38,8 @@ public class Person implements IPerson{
     
     @Override
     public String toString(){
-        return "Name: " + this.name
-             + "\n Address: " + this.address.toString();
+        return "Name: " + this.name + 
+               "\nAddress: " + this.address.toString();
     }
     
 }

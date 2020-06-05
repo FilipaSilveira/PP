@@ -30,4 +30,15 @@ public class Item extends Box implements IItem{
     public void setDescription(String string) {
         this.description=string;
     }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+     public String toString(){
+        return "Dimensions: " + super.toString() + 
+               "\nDescription: " + this.description + 
+               "\nReference: " + this.reference;
+    }
 }

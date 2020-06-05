@@ -75,11 +75,11 @@ public class Address implements IAddress {
     
     @Override
      public String toString(){
-        return "\n  Country: " + this.getCountry() +
-               "\n  City: " + this.getCity() +
-               "\n  State: " + this.getState() +
-               "\n  Number: " + this.number +
-               "\n  Street: " + this.street;
+        return "Country: " + this.getCountry() +
+               "\nCity: " + this.getCity() +
+               "\nState: " + this.getState() +
+               "\nNumber: " + this.number +
+               "\nStreet: " + this.street;
     }
     
 }

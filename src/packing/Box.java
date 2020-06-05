@@ -39,4 +39,15 @@ public class Box implements IBox{
         return this.Volume;
     }
     
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString(){
+        return "Depth: " + this.Depth + 
+               "\nHeight: " + this.Height + 
+               "\nLenght: " + this.Lenght + 
+               "\nVolume: " + this.Volume;
+    }
 }

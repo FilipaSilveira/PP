@@ -38,8 +38,8 @@ public class Customer extends Person implements ICustomer{
    @Override
     public String toString(){
         return super.toString() + 
-                "\n Billing Address: " + this.BillingAddress.toString()
-              + "\n Customer ID: " + this.IDCustomer;
+                "\nBilling Address: " + this.BillingAddress.toString()
+              + "\nCustomer ID: " + this.IDCustomer;
     }
     
 }
