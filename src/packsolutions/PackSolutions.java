@@ -39,6 +39,10 @@ public class PackSolutions {
         
         // Container
         Container con_1 = new Container(2, 2, 2, 2); // volume tem que ser 8
+        Container con_2 = new Container(2, 2, 2, 2); // volume tem que ser 8
+        Container con_3 = new Container(2, 2, 2, 2); // volume tem que ser 8
+        Container con_4 = new Container(2, 2, 2, 2); // volume tem que ser 8
+        
         System.out.println(con_1.getVolume()); // retorn volume certo 
         
         // ShippingOrder
@@ -46,6 +50,9 @@ public class PackSolutions {
         
         // Position
         Position pos_1 = new Position(0, 0, 0);
+        Position pos_2 = new Position(0, 2, 0);
+        Position pos_3 = new Position(0, 4, 0);
+        Position pos_4 = new Position(0, 6, 0);
         
         // add items to container
         try { 
@@ -61,6 +68,9 @@ public class PackSolutions {
         // closing Container
         try {
             con_1.close();
+            con_2.close();
+            con_3.close();
+            con_4.close();
         } catch (containerException ex) {
             Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (positionException ex) {
@@ -80,7 +90,13 @@ public class PackSolutions {
             System.out.println(so_1.addContainer(con_1)); 
             
             
+            so_1.addContainer(con_1);
+            so_1.addContainer(con_2);
+            so_1.addContainer(con_3);
+            so_1.addContainer(con_4);
             
+            
+            System.out.println(so_1.summary());
             
         } catch (orderException ex) {
             Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);

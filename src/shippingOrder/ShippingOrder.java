@@ -20,7 +20,7 @@ public class ShippingOrder implements IShippingOrder{
     private static int id = 0;
     private final int idContainer;
     Customer customer, destination;
-    private static int MAX_CONTAINERS = 5;
+    private static int MAX_CONTAINERS = 3;
     private int numContainers = 0;
 
     public ShippingOrder(Customer customer, Customer destination) {
@@ -60,22 +60,18 @@ public class ShippingOrder implements IShippingOrder{
             return true;
             
         }else{
-            // this.Containers = new Container[MAX_CONTAINERS];
-            Container newContainers[] =  new Container[this.numContainers];
-            newContainers = this.Containers;
-            this.MAX_CONTAINERS += 15;
-            this.Containers = new Container[MAX_CONTAINERS];
-            this.Containers = newContainers;
-            
-            this.Containers[this.numContainers]=(Container)ic;
+            Container[] newContainer = new Container[MAX_CONTAINERS + 5]; // novo contentor com mais 5 espaços
+            System.arraycopy(this.Containers, 0, newContainer, 0, this.Containers.length);
+            this.Containers = newContainer;
+            this.Containers[this.numContainers] = (Container)ic;
             this.numContainers++;
-            return true; 
+            this.MAX_CONTAINERS = MAX_CONTAINERS + 5;
+            return true;
         }
     }
 
     @Override
     public boolean removeContainer(IContainer ic) throws orderException, containerException {
-        int flag = 0;
         
         if(this.status != OrderStatus.IN_TREATMENT){
             throw new orderException();
@@ -84,25 +80,21 @@ public class ShippingOrder implements IShippingOrder{
             throw new containerException();
         }    
         for (int i = 0; i < this.numContainers; i++) {
-            if (this.Containers[i] == ic) {
+            if (this.Containers[i].getReference().equals(ic.getReference())) { // encontra contentor
                 for (int j = i; j < this.numContainers - 1; j++) {
                     this.Containers[i] = this.Containers[i + 1];
-                    this.numContainers--;
                 }
-                flag = 1;
+                this.numContainers--;
+                return true;
             }
         }
-        if(flag == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return false;
     }
 
     @Override
     public boolean existsContainer(IContainer ic) {
-        for(int i=0;i<this.numContainers;i++){
-            if(this.Containers[i]==ic){
+        for(int i=0; i<this.numContainers; i++){
+            if(this.Containers[i].getReference().equals(ic.getReference())){
                 return true;
             }
         }
@@ -113,7 +105,7 @@ public class ShippingOrder implements IShippingOrder{
     public int findContainer(String string) {
         int pos;
         for(int i=0; i<this.numContainers; i++){
-            if(this.Containers[i].getReference() == string){
+            if(this.Containers[i].getReference().equals(string)){
                 pos = i;
                 return pos; //testar return i;
             }
@@ -196,6 +188,7 @@ public class ShippingOrder implements IShippingOrder{
         
         for(int i = 0; i < this.numContainers; i++){
             string += this.Containers[i].toString();
+            string += "\n\n";
         }
 
         return string;

@@ -220,7 +220,7 @@ public class Container extends Box implements IContainer{
         
         String string = "";
         
-        System.out.println(this.NumItems);
+        //System.out.println(this.NumItems);
         for(int i = 0; i < this.NumItems; i++){
             
             string += this.item[i].getItem().getDescription();
