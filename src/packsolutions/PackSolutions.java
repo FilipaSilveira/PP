@@ -2,6 +2,7 @@ package packsolutions;
 
 import base.*;
 import exceptions.*;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import order.base.OrderStatus;
@@ -96,8 +97,19 @@ public class PackSolutions {
             so_1.addContainer(con_3);
             so_1.addContainer(con_4);
             
-            
+            System.out.println("----- Final -----");
             System.out.println(so_1.summary());
+            
+            Exporter exportJson = new Exporter();
+            
+            try { // tries to save to a file
+                
+                exportJson.export(so_1);
+                System.out.println("Exported!");
+                
+            } catch (IOException ex) {
+                Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         } catch (orderException ex) {
             Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
