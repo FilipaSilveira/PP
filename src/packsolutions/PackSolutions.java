@@ -52,7 +52,7 @@ public class PackSolutions {
         Item item_2 = new Item("item_2","2",2,2,2,2);
         
         // Container
-        Container con_1 = new Container(2, 2, 2, 2); // volume tem que ser 8
+        Container con_1 = new Container(8, 8, 8, 2);
         Container con_2 = new Container(2, 2, 2, 2); // volume tem que ser 8
         Container con_3 = new Container(2, 2, 2, 2); // volume tem que ser 8
         Container con_4 = new Container(2, 2, 2, 2); // volume tem que ser 8
@@ -64,7 +64,7 @@ public class PackSolutions {
         
         // Position
         Position pos_1 = new Position(0, 0, 0);
-        Position pos_2 = new Position(0, 2, 0);
+        Position pos_2 = new Position(0, 3, 0);
         Position pos_3 = new Position(0, 4, 0);
         Position pos_4 = new Position(0, 6, 0);
         
@@ -74,6 +74,8 @@ public class PackSolutions {
             System.out.println(con_1.addItem(item_2, pos_1, Color.silver));
             System.out.println(con_1.getItem("2")); // retorna referência de objeto
             System.out.println(con_1.getItem("1")); // não encontra retorna null
+            
+            System.out.println(con_1.addItem(item_1, pos_2, Color.green));
             
         } catch (containerException ex) {
             Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,23 +114,18 @@ public class PackSolutions {
             //ficheiro
             Exporter exportJson = new Exporter();
             
+            try { //tries to save to a file
+                
+                exportJson.export(so_1);
+                System.out.println("Exported!");
+                
+            } catch (IOException ex) {
+                Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             PackingGUI gui = new PackingGUI();
-            String filepath = "example.json"; 
+            String filepath = "shippingOrder.json";
             
-            /*if(gui.validate(filepath)){ // mostra exemplo.json
-                try {
-                
-                gui.render(filepath);
-                
-
-                } catch (IOException ex) {
-                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ParseException ex) {
-                    Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }*/
-            
-            filepath = "shippingOrder.json";
             
             if(gui.validate(filepath)){ // mostra a minha INFO!
                 try {
@@ -142,17 +139,7 @@ public class PackSolutions {
                     Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            
-            try { //tries to save to a file
-                
-                exportJson.export(so_1);
-                System.out.println("Exported!");
-                
-            } catch (IOException ex) {
-                Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+
         } catch (orderException ex) {
             Logger.getLogger(PackSolutions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (containerException ex) {
